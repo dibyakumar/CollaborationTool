@@ -3,8 +3,11 @@ package com.user.microservice.services;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.http.HttpStatusCode;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import com.user.microservice.Exception.ServiceException;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -41,7 +44,7 @@ public class JwtConfService {
 			Jwts.parser().setSigningKey(key).build().parseClaimsJws(token);
 			return true;
 		}catch(JwtException | IllegalArgumentException e) {
-			return false;
+			throw new ServiceException("Invalid/Expire Token", HttpStatusCode.valueOf(401));
 		}
 	}
 

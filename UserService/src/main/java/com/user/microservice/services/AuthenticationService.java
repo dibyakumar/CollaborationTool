@@ -32,20 +32,18 @@ public class AuthenticationService {
 		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 		user.setUserName(registerRequest.getUsername());
 		user.setRole(registerRequest.getRole());
+		user.setOrganization(registerRequest.getOrganization());
+		user.setEmail(registerRequest.getEmail());
+		user.setStatus("A");
 		
 		urepo.save(user);
 		return "Registered";
 	}
 
 	public AuthenticateResponse generateToken(AuthenticateRequest authRequest) {
-		try {
 			authManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 			String token = jwtService.generateToken(authRequest.getUsername());
 			return AuthenticateResponse.builder().token(token).build();
-			
-		}catch (AuthenticationException e) {
-			throw new RuntimeException("Invalid User");
-		}
 	}
 	
 	
