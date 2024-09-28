@@ -51,11 +51,7 @@ public class ForgotPasswordService {
 		// stored in cache for 2min
 		cache.put(email, otp);
 		// send email
-		try {
 			mailServiec.sendEmail(user.getEmail(),Constant.SUBJECT,createHtmlContent(user.getUserName(),otp));
-		} catch (MessagingException e) {
-			throw new ServiceException(e.getMessage(), HttpStatusCode.valueOf(400));
-		}
 		return SuccessResponse.builder().message("Otp Send to your eamail please check ").build();
 	}
 	

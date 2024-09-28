@@ -3,6 +3,9 @@ package com.project.microservice.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.microservice.constants.Role;
 
 import jakarta.persistence.Column;
@@ -28,19 +31,8 @@ public class User {
 	private String password;
 	@Column(name="role")
 	private Role role;
+	@Column(name="email")
+	private String email;
 	@Column(name="status")
 	private String status;
-	// many user can belong to many teams 
-	@ManyToMany
-    @JoinTable(
-        name = "team_members", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "team_id")
-    )
-	private Set<Team> teams = new HashSet<>();
-	
-	@ManyToMany(mappedBy = "admins")
-	private Set<Team> managingTeams = new HashSet<>();
-	@OneToOne(mappedBy = "projectLead")
-	private Project projectLead;
 }

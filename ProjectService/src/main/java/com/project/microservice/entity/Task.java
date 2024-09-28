@@ -2,11 +2,14 @@ package com.project.microservice.entity;
 
 import java.time.LocalDate;
 
+import com.project.microservice.constants.STATUS;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -20,13 +23,14 @@ public class Task {
 	@Column(name="task_id")
 	private Long taskId;
 	@ManyToOne
+	@JoinColumn(name="project_id",referencedColumnName = "project_id")
 	private Project projectId;
 	@Column(name="task_name")
 	private String taskName;
 	@Column(name="description")
 	private String description;
 	@Column(name="status")
-	private String status;
+	private STATUS status;
 	@Column(name="start")
 	private LocalDate startDate;
 	@Column(name="end")
